@@ -29,7 +29,7 @@ export const typeDefs = gql`
     getAllCategories: [Category]
     getTransactionById(id: String!): Transaction
     getTransactions(
-      sortBy: String
+      sortAsc: Boolean
       accountId: String
       startMonth: String
       endMonth: String
