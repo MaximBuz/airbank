@@ -31,8 +31,8 @@ export const typeDefs = gql`
     getTransactions(
       sortBy: String
       accountId: String
-      startDate: String
-      endDate: String
+      startMonth: String
+      endMonth: String
       take: Int
       cursor: Int
     ): [Transaction]
