@@ -48,8 +48,6 @@ export async function getTransactions(
     ? new Date(Number(_args.endMonth.split('-')[1]), Number(_args.endMonth.split('-')[0]))
     : new Date(new Date().getFullYear(), new Date().getMonth());
 
-  console.log(startMonth, endMonth);
-
   const searchParams: Prisma.TransactionFindManyArgs = {
     take,
     skip,
