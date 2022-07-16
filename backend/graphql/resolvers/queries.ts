@@ -37,14 +37,22 @@ export async function getTransactions(
   // Grabbing arguments and providing defaults
   const sortAsc = _args.sortAsc || false;
   const accountId = _args.accountId || undefined;
-  const startMonth = _args.startMonth || '01-2022'; // those have to be transformed into dates!
-  const endMonth = _args.endMonth || '12-2022'; // those have to be transformed into dates!
   const take = _args.take || 20;
   const cursor = _args.cursor || null;
 
+  const startMonth = _args.startMonth
+    ? new Date(Number(_args.startMonth.split('-')[1]), Number(_args.startMonth.split('-')[0]))
+    : new Date(new Date().getFullYear());
+  
+  const endMonth = _args.endMonth
+    ? new Date(Number(_args.endMonth.split('-')[1]), Number(_args.endMonth.split('-')[0]))
+    : new Date(new Date().getFullYear(), new Date().getMonth());
+
+  console.log(startMonth, endMonth);
+  
   const searchParams: Prisma.TransactionFindManyArgs = {
     take,
-    where: { accountId, date: { lte: new Date(endMonth), gte: new Date(startMonth) } },
+    where: { accountId, date: { lte: endMonth, gte: startMonth } },
     orderBy: { date: sortAsc ? 'asc' : 'desc' },
   };
 
