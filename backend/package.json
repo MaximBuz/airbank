@@ -2,9 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon",
+    "tsc": "./node_modules/typescript/bin/tsc",
+    "build": "rimraf ./dist && npm run tsc",
+    "start": "npm run build && node dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +25,8 @@
     "@prisma/client": "^4.0.0",
     "apollo-server": "^3.10.0",
     "csv-parser": "^3.0.0",
-    "graphql": "^16.5.0"
+    "graphql": "^16.5.0",
+    "nodemon": "^2.0.19",
+    "rimraf": "^3.0.2"
   }
 }
