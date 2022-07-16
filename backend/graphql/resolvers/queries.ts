@@ -9,11 +9,6 @@ export async function getAccountById(_parent: undefined, _args: { id: string }, 
   return account;
 }
 
-export async function getAllAccounts(_parent: undefined, _args: undefined, context: Context) {
-  const accounts = await context.prisma.account.findMany();
-  return accounts;
-}
-
 export async function getAllCategories(_parent: undefined, _args: undefined, context: Context) {
   const categories = await context.prisma.category.findMany();
   return categories;

@@ -3,7 +3,6 @@ import { Category } from './resolvers/categories';
 import { Account } from './resolvers/accounts';
 import {
   getAccountById,
-  getAllAccounts,
   getAllCategories,
   getTransactionById,
   getTransactions,
@@ -12,7 +11,6 @@ import {
 export const resolvers = {
   Query: {
     getAccountById,
-    getAllAccounts,
     getAllCategories,
     getTransactionById,
     getTransactions,
