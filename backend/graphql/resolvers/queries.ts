@@ -30,7 +30,7 @@ export async function getTransactions(
     startMonth?: string;
     endMonth?: string;
     take?: number;
-    cursor?: string;
+    skip?: number;
   },
   context: Context
 ) {
@@ -38,31 +38,24 @@ export async function getTransactions(
   const sortAsc = _args.sortAsc || false;
   const accountId = _args.accountId || undefined;
   const take = _args.take || 20;
-  const cursor = _args.cursor || null;
+  const skip = _args.skip || 0;
 
   const startMonth = _args.startMonth
     ? new Date(Number(_args.startMonth.split('-')[1]), Number(_args.startMonth.split('-')[0]))
     : new Date(new Date().getFullYear());
-  
+
   const endMonth = _args.endMonth
     ? new Date(Number(_args.endMonth.split('-')[1]), Number(_args.endMonth.split('-')[0]))
     : new Date(new Date().getFullYear(), new Date().getMonth());
 
   console.log(startMonth, endMonth);
-  
+
   const searchParams: Prisma.TransactionFindManyArgs = {
     take,
+    skip,
     where: { accountId, date: { lte: endMonth, gte: startMonth } },
     orderBy: { date: sortAsc ? 'asc' : 'desc' },
   };
-
-  if (cursor) {
-    searchParams.cursor = {
-      id: cursor,
-    };
-    searchParams.skip = 1;
-  }
-
   const transactions = await context.prisma.transaction.findMany(searchParams);
   return transactions;
 }

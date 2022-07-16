@@ -33,7 +33,7 @@ export const typeDefs = gql`
       startMonth: String
       endMonth: String
       take: Int
-      cursor: String
+      skip: Int
     ): [Transaction]
   }
 `;
