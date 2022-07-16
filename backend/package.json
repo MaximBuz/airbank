@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@prisma/client": "^4.0.0",
-    "csv-parser": "^3.0.0"
+    "apollo-server": "^3.10.0",
+    "csv-parser": "^3.0.0",
+    "graphql": "^16.5.0"
   }
 }
