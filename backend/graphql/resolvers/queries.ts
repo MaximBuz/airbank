@@ -9,8 +9,14 @@ export async function getAccountById(_parent: undefined, _args: { id: string }, 
   return account;
 }
 
-export async function getAllAccounts(_parent: undefined, _args: undefined, context: Context) {
-  const accounts = await context.prisma.account.findMany(/* { include: { transactions: true } } */);
+export async function getAllAccounts(
+  _parent: undefined,
+  _args: { withTransactions: boolean },
+  context: Context
+) {
+  const accounts = await context.prisma.account.findMany({
+    include: { transactions: _args.withTransactions || false },
+  });
   return accounts;
 }
 
