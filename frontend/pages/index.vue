@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Transactions</h1>
+  <div class="container mx-auto h-screen p-4">
+    <h1 class="text-2xl">Transactions</h1>
     <select v-model="accountId" aria-placeholder="Filter by accounts">
       <option :value="undefined">Filter by accounts</option>
       <option v-for="account in accounts" :key="account.id" :value="account.id">{{account.name}}</option>
@@ -8,26 +8,29 @@
     <input type="month"></input>
     <input type="month"></input>
 
-<table class="table-auto border-collapse border border-slate-400">
-  <thead>
-    <tr >
-      <th class="border-collapse border border-slate-400">Reference</th>
-      <th class="border-collapse border border-slate-400">Category</th>
-      <th class="border-collapse border border-slate-400">Date</th>
-      <th class="border-collapse border border-slate-400">Amount</th>
-      <th class="border-collapse border border-slate-400">view</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="transaction in transactions" :key="transaction.id">
-      <td class="border-collapse border border-slate-400">{{transaction.reference}}</td>
-      <td class="border-collapse border border-slate-400">{{transaction.category.name}}</td>
-      <td class="border-collapse border border-slate-400">{{transaction.date}}</td>
-      <td class="border-collapse border border-slate-400">{{transaction.amount}}<span>{{transaction.currency}}</span></td>
-      <td><NuxtLink :to="`transactions/${transaction.id}`">View</NuxtLink></td>
-    </tr>
-  </tbody>
-</table>
+  <div class="h-full overflow-y-scroll">
+    <table class="h-4/5 border-collapse table-auto w-full text-sm font-light text-left">
+      <thead class="sticky top-0 bg-white shadow-sm">
+        <tr class="font-medium outline-b outline-t  p-4 pl-8 pt-0 pb-3 text-gray-400 text-left">
+          <th class="p-4 pl-8 border-collapse border-b font-normal">Reference</th>
+          <th class="p-4 pl-8 border-collapse border-b font-normal">Category</th>
+          <th class="p-4 pl-8 border-collapse border-b font-normal">Date</th>
+          <th class="p-4 pl-8 border-collapse border-b font-normal">Amount</th>
+          <th class="p-4 pl-8 border-collapse border-b font-normal">view</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="transaction in transactions" :key="transaction.id" class="bg-white hover:bg-blue-50">
+          <td v-if="transaction.reference" class="p-4 pl-8 border-collapse border-gray-100 border-b">{{transaction.reference}}</td>
+          <td v-else class="p-4 pl-8 border-collapse border-gray-100 text-gray-300 border-b">No reference provided</td>
+          <td class="p-4 pl-8 border-collapse border-gray-100 border-b">{{transaction.category.name}}</td>
+          <td class="p-4 pl-8 border-collapse border-gray-100 border-b">{{transaction.date}}</td>
+          <td class="p-4 pl-8 border-collapse border-gray-100 border-b text-right">{{transaction.amount.toLocaleString('us-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}} <span class="text-gray-400">{{transaction.currency}}</span></td>
+          <td class="p-4 pl-8 border-collapse border-gray-100 border-b"><NuxtLink :to="`transactions/${transaction.id}`">View</NuxtLink></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <button v-if="showMoreEnabled" @click="previousPage">Previous Page</button>
   <button v-if="showMoreEnabled" @click="nextPage">Next Page</button>
   </div>
