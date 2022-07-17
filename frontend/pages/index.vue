@@ -8,19 +8,27 @@
     <input type="month"></input>
     <input type="month"></input>
 
-  <div class="h-5/6 overflow-y-scroll border-t">
+  <div class="h-5/6 overflow-y-scroll border-t rounded-lg">
     <table class="h-full table-fixed w-full text-xs font-light text-left">
-      <thead class="sticky top-0 z-10 bg-white shadow-sm">
+      <thead class="sticky top-0 z-10 bg-gray-50 shadow-sm ">
         <tr class="font-medium  p-4 pl-8 pt-0 pb-3 text-gray-400 text-left">
           <th class="w-2/5 p-4 pl-8 border-b font-normal">Reference</th>
           <th class="w-1/5 pl-8 border-b font-normal">Category</th>
-          <th class="w-1/6 pl-8 border-b font-normal">Date</th>
-          <th class="w-1/8 p-4 pl-8 border-b font-normal text-right">Amount</th>
+          <th class="w-1/8 px-8 border-b font-normal hover:bg-gray-100 cursor-pointer" @click="sortAsc = !sortAsc">
+            <div class="flex items-center gap-1.5">
+              Date
+              <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="0.9em" height="0.9em" :fill="sortAsc ? '#60a5fa' : '#6b7280'" >
+                <path v-if="sortAsc"  d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path>
+                <path v-else d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
+              </svg>
+            </div>
+          </th>
+          <th class="w-1/6 p-4 pl-8 border-b font-normal text-right">Amount</th>
           <th class="p-4 pl-8 border-b font-normal"></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="transaction in transactions" :key="transaction.id" class="bg-white hover:bg-blue-50">
+        <tr v-for="transaction in transactions" :key="transaction.id" class="bg-white hover:bg-gray-50">
           <td v-if="transaction.reference" class="p-4 pl-8 border-gray-100 border-b">{{transaction.reference}}</td>
           <td v-else class="p-4 pl-8 border-gray-100 text-gray-300 border-b">No reference provided</td>
           <td class="p-4 pl-8 border-gray-100 border-b"><div :style="{backgroundColor:getColor(transaction.category.color)}" class="rounded-md p-2 max-w-max sepia">{{transaction.category.name}}</div></td>
