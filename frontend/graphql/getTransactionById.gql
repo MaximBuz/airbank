@@ -1,0 +1,18 @@
+query GetTransactions($id: String!) {
+  transaction: getTransactionById(id: $id) {
+    id
+    account {
+      name
+      id
+    }
+    category {
+      id
+      name
+      color
+    }
+    reference
+    amount
+    currency
+    date
+  }
+}

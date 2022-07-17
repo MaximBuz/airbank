@@ -27,7 +27,7 @@
           <label class="text-gray-400" for="start-month">From month</label>
           <input
             v-model="fromMonth"
-            class="cursor-pointer text-gray-400 appearance-none rounded-sm border h-10 px-3 focus:outline-none focus:border-blue-400 focus:border hover:border-gray-300 hover:bg-gray-50 text-sm placeholder-gray-50::placeholder"
+            class="cursor-pointer text-gray-400 appearance-none rounded-sm border h-10 px-3 focus:outline-none focus:border-blue-300 focus:border hover:border-gray-300 hover:bg-gray-50 text-sm placeholder-gray-50::placeholder"
             type="month"
           />
         </div>
@@ -43,10 +43,10 @@
     </div>
 
     <!-- Table -->
-    <div class="h-5/6 overflow-y-scroll border rounded-sm">
+    <div class="h-5/6 overflow-y-scroll border rounded-sm shadow-xm">
       <TransactionTable
         class="relative z-0"
-        :sort-asc="sortAsc"
+        :sort-asc="Boolean(sortAsc)"
         :transactions="transactions"
         @sort="changeSortDirection"
         @reset="resetFilter"
@@ -57,7 +57,7 @@
     <div class="flex align-center justify-end gap-1 mt-1">
       <button
         :disabled="page == 0"
-        class="disabled:opacity-50 disabled:cursor-not-allowed rounded-sm border p-2 hover:border-gray-300 hover:bg-gray-50"
+        class="disabled:opacity-30 disabled:cursor-not-allowed rounded-sm border border-gray-300 p-2 bg-white hover:border-gray-400 hover:bg-gray-50"
         @click="previousPage"
       >
         <svg
@@ -66,7 +66,7 @@
           data-icon="left"
           width="1em"
           height="1em"
-          fill="#d1d5db"
+          fill="#6A7280"
         >
           <path
             d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
@@ -74,13 +74,13 @@
         </svg>
       </button>
       <button
-        class="w-8 cursor-default rounded-sm border border-blue-400 text-blue-400 p-2"
+        class="w-8 cursor-default rounded-sm border bg-white border-blue-400 text-blue-400 p-2"
       >
         {{ page }}
       </button>
       <button
         :disabled="transactions.length < 20"
-        class="disabled:opacity-50 disabled:cursor-not-allowed rounded-sm border p-2 hover:border-gray-300 hover:bg-gray-50"
+        class="disabled:opacity-30 disabled:cursor-not-allowed rounded-sm border border-gray-300 p-2 bg-white hover:border-gray-400 hover:bg-gray-50"
         @click="nextPage"
       >
         <svg
@@ -89,7 +89,7 @@
           data-icon="right"
           width="1em"
           height="1em"
-          fill="#d1d5db"
+          fill="#6A7280"
         >
           <path
             d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
@@ -108,18 +108,22 @@ import getAllAccounts from '~/graphql/getAllAccounts.gql'
 const pageSize = 20
 export default {
   name: 'IndexPage',
-  components: { TransactionTable },
+  components: {
+    TransactionTable,
+  },
   data() {
     return {
       transactions: [],
-      sortAsc: false,
-      accountId: undefined,
-      fromMonth: `${new Date().getFullYear()}-01`,
-      toMonth: `${new Date().getFullYear()}-${String(
-        new Date().getMonth() + 1
-      ).padStart(2, '0')}`,
-      page: 0,
-      showMoreEnabled: true,
+      sortAsc: Boolean(this.$route.query.sortAsc) || undefined,
+      accountId: this.$route.query.accountId || undefined,
+      fromMonth:
+        this.$route.query.fromMonth || `${new Date().getFullYear()}-01`,
+      toMonth:
+        this.$route.query.toMonth ||
+        `${new Date().getFullYear()}-${String(
+          new Date().getMonth() + 1
+        ).padStart(2, '0')}`,
+      page: this.$route.query.page || 0,
     }
   },
   head: {
@@ -128,6 +132,26 @@ export default {
   computed: {
     skip() {
       return pageSize * this.page
+    },
+    filter() {
+      return {
+        sortAsc: this.sortAsc,
+        accountId: this.accountId,
+        fromMonth: this.fromMonth,
+        toMonth: this.toMonth,
+        page: this.page,
+      }
+    },
+  },
+  watch: {
+    filter() {
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.filter,
+          sortAsc: this.filter.sortAsc ? true : undefined,
+        },
+      })
     },
   },
   apollo: {
@@ -174,3 +198,8 @@ export default {
   },
 }
 </script>
+<style>
+body {
+  background-color: #f7fafc;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <table class="h-full table-fixed w-full text-xs font-light text-left">
+  <table class="table-fixed w-full text-xs font-light text-left">
     <thead class="sticky top-0 z-10 bg-gray-50 shadow-sm">
       <tr class="font-medium pl-8 pt-0 pb-3 text-gray-400 text-left">
         <th class="w-2/6 p-4 pl-8 border-b font-normal">Reference</th>
@@ -49,12 +49,7 @@
           No reference provided
         </td>
         <td class="p-4 pl-8 border-gray-100 border-b hover:scale-105">
-          <div
-            :style="{ backgroundColor: getColor(transaction.category.color) }"
-            class="rounded-md p-2 max-w-max sepia"
-          >
-            {{ transaction.category.name }}
-          </div>
+          <CategoryPill v-if="transaction" :category="transaction.category"/>
         </td>
         <td class="p-4 pl-8 border-gray-100 border-b">
           {{ showDate(transaction.date) }}
@@ -70,7 +65,7 @@
         </td>
         <td class="border-gray-100 border-b">
           <NuxtLink :to="`transactions/${transaction.id}`">
-            <div class="h-full w-full flex">
+            <div class="w-full flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 m-auto"
@@ -97,7 +92,15 @@
       v-if="transactions.length === 0"
       class="absolute flex w-full h-5/6 text-lg text-gray-400 justify-center items-center align-center text-center"
     >
-      <p>No transactions found. Consider <span class="text-blue-400 underline cursor-pointer" @click="$emit('reset')">resetting</span> your filters.</p>
+      <p>
+        No transactions found. Consider
+        <span
+          class="text-blue-400 underline cursor-pointer"
+          @click="$emit('reset')"
+          >resetting</span
+        >
+        your filters.
+      </p>
     </div>
   </table>
 </template>
@@ -105,23 +108,26 @@
 <script>
 import dayjs from 'dayjs'
 import tinycolor from 'tinycolor2'
+import CategoryPill from './CategoryPill.vue'
 
 export default {
-  name: 'TransactionTable',
-  props: {
-    transactions: { type: Array, default: () => [] },
-    sortAsc: Boolean,
-  },
-  methods: {
-    showDate(timesamp) {
-      return dayjs(Number(timesamp)).format('D/M/YYYY')
+    name: "TransactionTable",
+    components: [CategoryPill],
+    props: {
+        transactions: { type: Array, default: () => [] },
+        sortAsc: Boolean,
     },
-    getColor(color) {
-      if (!color) return '#f3f4f6'
-      return tinycolor('#' + color)
-        .brighten(15)
-        .toString()
+    methods: {
+        showDate(timesamp) {
+            return dayjs(Number(timesamp)).format("D/M/YYYY");
+        },
+        getColor(color) {
+            if (!color)
+                return "#f3f4f6";
+            return tinycolor("#" + color)
+                .brighten(15)
+                .toString();
+        },
     },
-  },
 }
 </script>
