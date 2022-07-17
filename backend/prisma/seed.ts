@@ -1,61 +1,42 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Account, Category, Transaction } from '@prisma/client';
 const prisma = new PrismaClient();
 const csv = require('csv-parser');
 const fs = require('fs');
 
-export interface AccountRow {
-  id: string;
-  name: string;
-}
-export interface CategoryRow {
-  id: string;
-  name: string;
-  color: string;
-}
-export interface TransactionRow {
-  id: string;
-  accountId: string;
-  categoryId: string | undefined;
-  reference: string;
-  amount: number;
-  currency: string;
-  date: string | Date;
-}
-
-function getAccounts(): Promise<AccountRow[]> {
+function getAccounts(): Promise<Account[]> {
   return new Promise((resolve, reject) => {
-    const results: AccountRow[] = [];
+    const results: Account[] = [];
     fs.createReadStream('./data/accounts.csv')
       .pipe(csv())
-      .on('data', (data: AccountRow) => results.push(data))
+      .on('data', (data: Account) => results.push(data))
       .on('error', (err: Error) => reject(err))
       .on('end', () => resolve(results));
   });
 }
 
-function getCategories(): Promise<CategoryRow[]> {
+function getCategories(): Promise<Category[]> {
   return new Promise((resolve, reject) => {
-    const results: CategoryRow[] = [];
+    const results: Category[] = [];
     fs.createReadStream('./data/categories.csv')
       .pipe(csv())
-      .on('data', (data: CategoryRow) => results.push(data))
+      .on('data', (data: Category) => results.push(data))
       .on('error', (err: Error) => reject(err))
       .on('end', () => resolve(results));
   });
 }
 
-function getTransactions(): Promise<TransactionRow[]> {
+function getTransactions(): Promise<Transaction[]> {
   return new Promise((resolve, reject) => {
-    const results: TransactionRow[] = [];
+    const results: Transaction[] = [];
     fs.createReadStream('./data/transactions.csv')
       .pipe(csv())
-      .on('data', (data: TransactionRow) =>
+      .on('data', (data: Transaction) =>
         results.push({
           ...data,
-          categoryId: data.categoryId ? data.categoryId : undefined,
-          date: new Date(data.date),
+          categoryId: data.categoryId ? data.categoryId : null,
+          date: new Date(data.date), // Attention: Prisma complains if this is not parsed correctly!
         })
-      ) // Attention: Prisma complains if this is not parsed correctly!
+      )
       .on('error', (err: Error) => reject(err))
       .on('end', () => resolve(results));
   });
