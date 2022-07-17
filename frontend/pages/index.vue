@@ -40,6 +40,9 @@
   </tbody>
 </table>
 
+<li v-for="transaction in getTransactions" :key="transaction.id">
+        <p>{{transaction.reference}}</p>
+      </li>
   </div>
 </template>
 
