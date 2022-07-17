@@ -73,7 +73,7 @@
         </svg>
       </button>
       <button
-        v-if="showMoreEnabled"
+        :disabled="transactions.length < 20"
         class="disabled:opacity-50 disabled:cursor-not-allowed rounded-sm border p-2 hover:border-gray-300 hover:bg-gray-50 hover:scale-105"
         @click="nextPage"
       >
@@ -144,7 +144,7 @@ export default {
   },
   methods: {
     nextPage() {
-      this.page++
+      this.transactions.length > 0 && this.page++;
     },
     previousPage() {
       this.page > 0 && this.page--
