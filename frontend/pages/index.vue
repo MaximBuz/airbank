@@ -43,7 +43,7 @@
     </div>
 
     <!-- Table -->
-    <div class="h-5/6 overflow-y-scroll border rounded-sm shadow-xm">
+    <div class="h-5/6 overflow-y-scroll border rounded-sm shadow-xm bg-white">
       <TransactionTable
         class="relative z-0"
         :sort-asc="Boolean(sortAsc)"
