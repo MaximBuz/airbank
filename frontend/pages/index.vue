@@ -44,7 +44,17 @@
 </template>
 
 <script>
+import getTransactions from '~/graphql/getTransactions.gql'
 export default {
   name: 'IndexPage',
+  apollo: {
+    getTransactions: {
+      prefetch: true,
+      query: getTransactions
+    }
+  },
+  head: {
+    title: 'Transactions'
+  }
 }
 </script>
