@@ -8,7 +8,7 @@
         <select
           id="account"
           v-model="accountId"
-          class="w-60 appearance-none text-gray-400 rounded-sm border h-10 px-3 hover:border-gray-300 hover:bg-gray-50 text-sm"
+          class="w-60 appearance-none text-gray-400 rounded-sm border h-10 px-3 focus:outline-none focus:border-blue-400 focus:border hover:border-gray-300 hover:bg-gray-50 text-sm"
           type="button"
         >
           <option :value="undefined">No Filter</option>
@@ -27,7 +27,7 @@
           <label class="text-gray-400" for="start-month">From month</label>
           <input
             v-model="fromMonth"
-            class="cursor-pointer text-gray-400 appearance-none rounded-sm border h-10 px-3 hover:border-gray-300 hover:bg-gray-50 text-sm placeholder-gray-50::placeholder"
+            class="cursor-pointer text-gray-400 appearance-none rounded-sm border h-10 px-3 focus:outline-none focus:border-blue-400 focus:border hover:border-gray-300 hover:bg-gray-50 text-sm placeholder-gray-50::placeholder"
             type="month"
           />
         </div>
@@ -35,7 +35,7 @@
           <label class="text-gray-400" for="end-month">To month</label>
           <input
             v-model="toMonth"
-            class="cursor-pointer text-gray-400 appearance-none rounded-sm border h-10 px-3 hover:border-gray-300 hover:bg-gray-50 text-sm placeholder-gray-50::placeholder"
+            class="cursor-pointer text-gray-400 appearance-none rounded-sm border h-10 px-3 focus:outline-none focus:border-blue-400 focus:border hover:border-gray-300 hover:bg-gray-50 text-sm placeholder-gray-50::placeholder"
             type="month"
           />
         </div>
@@ -57,7 +57,7 @@
     <div class="flex align-center justify-end gap-1 mt-1">
       <button
         :disabled="page == 0"
-        class="disabled:opacity-50 disabled:cursor-not-allowed rounded-sm border p-2 hover:border-gray-300 hover:bg-gray-50 hover:scale-105"
+        class="disabled:opacity-50 disabled:cursor-not-allowed rounded-sm border p-2 hover:border-gray-300 hover:bg-gray-50"
         @click="previousPage"
       >
         <svg
@@ -74,8 +74,13 @@
         </svg>
       </button>
       <button
+        class="w-8 cursor-default rounded-sm border border-blue-400 text-blue-400 p-2"
+      >
+        {{ page }}
+      </button>
+      <button
         :disabled="transactions.length < 20"
-        class="disabled:opacity-50 disabled:cursor-not-allowed rounded-sm border p-2 hover:border-gray-300 hover:bg-gray-50 hover:scale-105"
+        class="disabled:opacity-50 disabled:cursor-not-allowed rounded-sm border p-2 hover:border-gray-300 hover:bg-gray-50"
         @click="nextPage"
       >
         <svg

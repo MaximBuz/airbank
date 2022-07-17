@@ -10,7 +10,9 @@ module.exports = {
       borderColor: ['hover'],
       scale: ["hover"],
       opacity: ['disabled'],
-      cursor: ["disabled"]
+      cursor: ["disabled"],
+      outline: ["focus"],
+      border: ["focus"]
     }
   },
   plugins: [],
