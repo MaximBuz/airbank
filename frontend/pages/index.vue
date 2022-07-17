@@ -26,7 +26,7 @@
         <div class="flex flex-col items-start">
           <label class="text-gray-400" for="start-month">From month</label>
           <input
-            v-model="startMonth"
+            v-model="fromMonth"
             class="cursor-pointer text-gray-400 appearance-none rounded-sm border h-10 px-3 hover:border-gray-300 hover:bg-gray-50 text-sm placeholder-gray-50::placeholder"
             type="month"
           />
@@ -34,7 +34,7 @@
         <div class="flex flex-col items-start">
           <label class="text-gray-400" for="end-month">To month</label>
           <input
-            v-model="endMonth"
+            v-model="toMonth"
             class="cursor-pointer text-gray-400 appearance-none rounded-sm border h-10 px-3 hover:border-gray-300 hover:bg-gray-50 text-sm placeholder-gray-50::placeholder"
             type="month"
           />
@@ -49,6 +49,7 @@
         :sort-asc="sortAsc"
         :transactions="transactions"
         @sort="changeSortDirection"
+        @reset="resetFilter"
       />
     </div>
 
@@ -108,8 +109,10 @@ export default {
       transactions: [],
       sortAsc: false,
       accountId: undefined,
-      startMonth: undefined,
-      endMonth: undefined,
+      fromMonth: `${new Date().getFullYear()}-01`,
+      toMonth: `${new Date().getFullYear()}-${String(
+        new Date().getMonth() + 1
+      ).padStart(2, '0')}`,
       page: 0,
       showMoreEnabled: true,
     }
@@ -134,8 +137,8 @@ export default {
         return {
           sortAsc: this.sortAsc,
           accountId: this.accountId,
-          startMonth: this.startMonth,
-          endMonth: this.endMonth,
+          startMonth: this.fromMonth,
+          endMonth: this.toMonth,
           take: pageSize,
           skip: this.skip,
         }
@@ -144,15 +147,25 @@ export default {
   },
   methods: {
     nextPage() {
-      this.transactions.length > 0 && this.page++;
+      this.transactions.length > 0 && this.page++
     },
     previousPage() {
       this.page > 0 && this.page--
     },
-    changeSortDirection () {
-      this.page = 0;
+    changeSortDirection() {
+      this.page = 0
       this.sortAsc = !this.sortAsc
-    }
+    },
+    resetFilter() {
+      this.sortAsc = false
+      this.accountId = undefined
+      this.fromMonth = `${new Date().getFullYear()}-01`
+      this.toMonth = `${new Date().getFullYear()}-${String(
+        new Date().getMonth() + 1
+      ).padStart(2, '0')}`
+      this.take = pageSize
+      this.skip = 0
+    },
   },
 }
 </script>
