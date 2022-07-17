@@ -45,17 +45,16 @@ export async function getTransactions(
   },
   context: Context
 ) {
-  // Grabbing arguments and providing defaults
   const sortAsc = _args.sortAsc || false;
   const accountId = _args.accountId || undefined;
   const take = _args.take || 20;
   const skip = _args.skip || 0;
 
-  const startMonth = _args.startMonth
+  const startMonth = _args.startMonth // expects "02-2022" format
     ? new Date(Number(_args.startMonth.split('-')[1]), Number(_args.startMonth.split('-')[0]))
     : new Date(new Date().getFullYear());
 
-  const endMonth = _args.endMonth
+  const endMonth = _args.endMonth // expects "02-2022" format
     ? new Date(Number(_args.endMonth.split('-')[1]), Number(_args.endMonth.split('-')[0]))
     : new Date(new Date().getFullYear(), new Date().getMonth());
 

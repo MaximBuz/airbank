@@ -2,8 +2,8 @@
   <div>
     <h1>Transactions</h1>
     <select v-model="accountId" aria-placeholder="Filter by accounts">
-      <option>Filter by accounts</option>
-      <option v-for="account in accounts" :key="account.id">{{account.name}}</option>
+      <option :value="undefined">Filter by accounts</option>
+      <option v-for="account in accounts" :key="account.id" :value="account.id">{{account.name}}</option>
     </select>
     <input type="month"></input>
     <input type="month"></input>
@@ -26,12 +26,15 @@
     </tr>
   </tbody>
 </table>
+  <button v-if="showMoreEnabled" @click="previousPage">Previous Page</button>
+  <button v-if="showMoreEnabled" @click="nextPage">Next Page</button>
   </div>
 </template>
 
 <script>
 import getTransactions from '~/graphql/getTransactions.gql'
 import getAllAccounts from '~/graphql/getAllAccounts.gql'
+const pageSize = 20
 export default {
   name: 'IndexPage',
   data () {
@@ -41,9 +44,18 @@ export default {
       accountId: undefined,
       startMonth: undefined,
       endMonth: undefined,
-      skip: 0
+      page: 0,
+      showMoreEnabled: true,
     }
   }, 
+  head: {
+    title: 'Transactions'
+  },
+  computed: {
+    skip () {
+      return pageSize * this.page
+    }
+  },
   apollo: {
     accounts: {
       prefetch: true,
@@ -58,14 +70,19 @@ export default {
           accountId: this.accountId,
           startMonth: this.startMonth,
           endMonth: this.endMonth,
-          take: 20,
+          take: pageSize,
           skip: this.skip,
         }
       }
     },
   },
-  head: {
-    title: 'Transactions'
-  }
+  methods: {
+    nextPage () {
+      this.page++
+    },
+    previousPage () {
+      this.page > 0 && this.page--;
+    }
+  },
 }
 </script>
