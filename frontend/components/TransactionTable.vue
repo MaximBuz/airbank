@@ -2,8 +2,8 @@
   <table class="h-full table-fixed w-full text-xs font-light text-left">
       <thead class="sticky top-0 z-10 bg-gray-50 shadow-sm ">
         <tr class="font-medium pl-8 pt-0 pb-3 text-gray-400 text-left">
-          <th class="w-2/5 p-4 pl-8 border-b font-normal">Reference</th>
-          <th class="w-1/5 pl-8 border-b font-normal">Category</th>
+          <th class="w-2/6 p-4 pl-8 border-b font-normal">Reference</th>
+          <th class="w-2/6 pl-8 border-b font-normal">Category</th>
           <th class="px-8 border-b font-normal hover:bg-gray-100 cursor-pointer" @click="$emit('sort')">
             <div class="flex items-center gap-1.5">
               Date
@@ -46,7 +46,7 @@ export default {
   name: "TransactionTable",
   props: {
     transactions: {type: Array, default: () => []},
-    sortAsc: Boolean
+    sortAsc: Boolean,
   },
   methods: {
     showDate (timesamp) {

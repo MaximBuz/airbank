@@ -8,8 +8,10 @@ module.exports = {
     extend: {
       backgroundColor: ['hover', 'odd', 'even'],
       borderColor: ['hover'],
-      scale: ["hover"]
+      scale: ["hover"],
+      opacity: ['disabled'],
+      cursor: ["disabled"]
     }
   },
   plugins: [],
-}
+};
