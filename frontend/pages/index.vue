@@ -48,7 +48,7 @@
         class="relative z-0"
         :sort-asc="sortAsc"
         :transactions="transactions"
-        @sort="sortAsc = !sortAsc"
+        @sort="changeSortDirection"
       />
     </div>
 
@@ -108,7 +108,7 @@ export default {
       transactions: [],
       sortAsc: false,
       accountId: undefined,
-      startMonth: '02-2022',
+      startMonth: undefined,
       endMonth: undefined,
       page: 0,
       showMoreEnabled: true,
@@ -149,6 +149,10 @@ export default {
     previousPage() {
       this.page > 0 && this.page--
     },
+    changeSortDirection () {
+      this.page = 0;
+      this.sortAsc = !this.sortAsc
+    }
   },
 }
 </script>
