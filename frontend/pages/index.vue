@@ -8,25 +8,25 @@
     <input type="month"></input>
     <input type="month"></input>
 
-  <div class="h-full overflow-y-scroll">
-    <table class="h-4/5 border-collapse table-auto w-full text-sm font-light text-left">
-      <thead class="sticky top-0 bg-white shadow-sm">
-        <tr class="font-medium outline-b outline-t  p-4 pl-8 pt-0 pb-3 text-gray-400 text-left">
-          <th class="p-4 pl-8 border-collapse border-b font-normal">Reference</th>
-          <th class="p-4 pl-8 border-collapse border-b font-normal">Category</th>
-          <th class="p-4 pl-8 border-collapse border-b font-normal">Date</th>
-          <th class="p-4 pl-8 border-collapse border-b font-normal">Amount</th>
-          <th class="p-4 pl-8 border-collapse border-b font-normal">view</th>
+  <div class="h-5/6 overflow-y-scroll border-t">
+    <table class="h-full table-fixed w-full text-xs font-light text-left">
+      <thead class="sticky top-0 z-10 bg-white shadow-sm">
+        <tr class="font-medium  p-4 pl-8 pt-0 pb-3 text-gray-400 text-left">
+          <th class="w-2/5 p-4 pl-8 border-b font-normal">Reference</th>
+          <th class="w-1/5 pl-8 border-b font-normal">Category</th>
+          <th class="w-1/6 pl-8 border-b font-normal">Date</th>
+          <th class="w-1/8 p-4 pl-8 border-b font-normal text-right">Amount</th>
+          <th class="p-4 pl-8 border-b font-normal"></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="transaction in transactions" :key="transaction.id" class="bg-white hover:bg-blue-50">
-          <td v-if="transaction.reference" class="p-4 pl-8 border-collapse border-gray-100 border-b">{{transaction.reference}}</td>
-          <td v-else class="p-4 pl-8 border-collapse border-gray-100 text-gray-300 border-b">No reference provided</td>
-          <td class="p-4 pl-8 border-collapse border-gray-100 border-b">{{transaction.category.name}}</td>
-          <td class="p-4 pl-8 border-collapse border-gray-100 border-b">{{transaction.date}}</td>
-          <td class="p-4 pl-8 border-collapse border-gray-100 border-b text-right">{{transaction.amount.toLocaleString('us-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}} <span class="text-gray-400">{{transaction.currency}}</span></td>
-          <td class="p-4 pl-8 border-collapse border-gray-100 border-b"><NuxtLink :to="`transactions/${transaction.id}`">View</NuxtLink></td>
+          <td v-if="transaction.reference" class="p-4 pl-8 border-gray-100 border-b">{{transaction.reference}}</td>
+          <td v-else class="p-4 pl-8 border-gray-100 text-gray-300 border-b">No reference provided</td>
+          <td class="p-4 pl-8 border-gray-100 border-b"><div :style="{backgroundColor:getColor(transaction.category.color)}" class="rounded-md p-2 max-w-max sepia">{{transaction.category.name}}</div></td>
+          <td class="p-4 pl-8 border-gray-100 border-b">{{showDate(transaction.date)}}</td>
+          <td class="p-4 pl-8 border-gray-100 border-b text-right">{{transaction.amount.toLocaleString('us-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}} <span class="text-gray-400">{{transaction.currency}}</span></td>
+          <td class="p-4 pl-8 border-gray-100 border-b"><NuxtLink :to="`transactions/${transaction.id}`"></NuxtLink></td>
         </tr>
       </tbody>
     </table>
@@ -37,8 +37,11 @@
 </template>
 
 <script>
+import dayjs from "dayjs";
+import tinycolor from "tinycolor2";
 import getTransactions from '~/graphql/getTransactions.gql'
 import getAllAccounts from '~/graphql/getAllAccounts.gql'
+
 const pageSize = 20
 export default {
   name: 'IndexPage',
@@ -87,6 +90,14 @@ export default {
     },
     previousPage () {
       this.page > 0 && this.page--;
+    },
+    showDate (timesamp) {
+      return dayjs(Number(timesamp)).format("D/M/YYYY")
+    },
+    getColor (color) {
+      if (!color)
+        return "#f3f4f6"
+      return tinycolor("#" + color).brighten(15).toString();
     }
   },
 }
