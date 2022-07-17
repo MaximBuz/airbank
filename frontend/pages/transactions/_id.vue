@@ -1,5 +1,6 @@
 <template>
   <div class="container mx-auto max-w-3xl h-screen p-20">
+    <!-- Header -->
     <div class="flex justify-between">
       <p
         class="text-gray-300 transition-all cursor-pointer text-sm hover:text-blue-400"
@@ -11,6 +12,8 @@
         {{ $route.params.id }}
       </p>
     </div>
+
+    <!-- Body -->
     <div
       v-if="transaction"
       class="overflow-y-scroll border rounded-sm shadow-xm mt-2 p-8 bg-white"
@@ -51,6 +54,14 @@
           {{ transaction.reference || 'No reference provided' }}
         </p>
       </div>
+    </div>
+
+    <!-- Empty Fallback -->
+    <div
+      v-else
+      class="flex justify-center items-center border rounded-sm shadow-xm mt-2 p-8 bg-white text-lg text-gray-400"
+    >
+      No transaction found.
     </div>
   </div>
 </template>

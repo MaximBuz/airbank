@@ -1,5 +1,6 @@
 <template>
   <table class="table-fixed w-full text-xs font-light text-left">
+    <!-- Table Head -->
     <thead class="sticky top-0 z-10 bg-gray-50 shadow-sm">
       <tr class="font-medium pl-8 pt-0 pb-3 text-gray-400 text-left">
         <th class="w-2/6 p-4 pl-8 border-b font-normal">Reference</th>
@@ -33,6 +34,8 @@
         <th class="w-20 border-b font-normal"></th>
       </tr>
     </thead>
+
+    <!-- Table Body -->
     <tbody class="w-full">
       <tr
         v-for="transaction in transactions"
@@ -49,20 +52,17 @@
           No reference provided
         </td>
         <td class="p-4 pl-8 border-gray-100 border-b hover:scale-105">
-          <CategoryPill v-if="transaction" :category="transaction.category"/>
+          <CategoryPill v-if="transaction" :category="transaction.category" />
         </td>
         <td class="p-4 pl-8 border-gray-100 border-b">
           {{ showDate(transaction.date) }}
         </td>
         <td class="p-4 pl-8 border-gray-100 border-b text-right">
-          {{
-            transaction.amount.toLocaleString('us-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-          }}
+          {{ getAmount(transaction.amount) }}
           <span class="text-gray-400">{{ transaction.currency }}</span>
         </td>
+
+        <!-- Body to Transaction Detail Page -->
         <td class="border-gray-100 border-b">
           <NuxtLink :to="`transactions/${transaction.id}`">
             <div class="w-full flex">
@@ -88,6 +88,8 @@
         </td>
       </tr>
     </tbody>
+
+    <!-- Empty Fallback -->
     <div
       v-if="transactions.length === 0"
       class="absolute flex w-full h-5/6 text-lg text-gray-400 justify-center items-center align-center text-center"
@@ -111,23 +113,28 @@ import tinycolor from 'tinycolor2'
 import CategoryPill from './CategoryPill.vue'
 
 export default {
-    name: "TransactionTable",
-    components: [CategoryPill],
-    props: {
-        transactions: { type: Array, default: () => [] },
-        sortAsc: Boolean,
+  name: 'TransactionTable',
+  components: [CategoryPill],
+  props: {
+    transactions: { type: Array, default: () => [] },
+    sortAsc: Boolean,
+  },
+  methods: {
+    showDate(timesamp) {
+      return dayjs(Number(timesamp)).format('D/M/YYYY')
     },
-    methods: {
-        showDate(timesamp) {
-            return dayjs(Number(timesamp)).format("D/M/YYYY");
-        },
-        getColor(color) {
-            if (!color)
-                return "#f3f4f6";
-            return tinycolor("#" + color)
-                .brighten(15)
-                .toString();
-        },
+    getColor(color) {
+      if (!color) return '#f3f4f6'
+      return tinycolor('#' + color)
+        .brighten(15)
+        .toString()
     },
+    getAmount(number) {
+      return number.toLocaleString('us-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    },
+  },
 }
 </script>

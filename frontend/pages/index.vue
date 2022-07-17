@@ -1,8 +1,8 @@
 <template>
   <div class="container mx-auto h-screen p-4 text-xs">
     <div class="relative z-10 flex justify-between items-center mb-1">
-      <!-- Filter -->
-
+      
+      <!-- Filtering -->
       <div class="flex flex-col items-start">
         <label class="text-gray-400" for="account">Account</label>
         <select
@@ -62,8 +62,6 @@
       >
         <svg
           viewBox="64 64 896 896"
-          focusable="false"
-          data-icon="left"
           width="1em"
           height="1em"
           fill="#6A7280"
@@ -85,8 +83,6 @@
       >
         <svg
           viewBox="64 64 896 896"
-          focusable="false"
-          data-icon="right"
           width="1em"
           height="1em"
           fill="#6A7280"
@@ -111,6 +107,7 @@ export default {
   components: {
     TransactionTable,
   },
+  /* Reactive State */
   data() {
     return {
       transactions: [],
@@ -143,6 +140,7 @@ export default {
       }
     },
   },
+  /* Persisting Filter state when coming back */
   watch: {
     filter() {
       this.$router.push({
@@ -154,6 +152,7 @@ export default {
       })
     },
   },
+  /* Reactive GraphQL Queries */
   apollo: {
     accounts: {
       prefetch: true,
