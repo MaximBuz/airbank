@@ -21,7 +21,7 @@
         <tr v-for="transaction in transactions" :key="transaction.id" class="bg-white hover:bg-gray-50">
           <td v-if="transaction.reference" class="p-4 pl-8 border-gray-100 border-b">{{transaction.reference}}</td>
           <td v-else class="p-4 pl-8 border-gray-100 text-gray-300 border-b">No reference provided</td>
-          <td class="p-4 pl-8 border-gray-100 border-b"><div :style="{backgroundColor:getColor(transaction.category.color)}" class="rounded-md p-2 max-w-max sepia">{{transaction.category.name}}</div></td>
+          <td class="p-4 pl-8 border-gray-100 border-b hover:scale-105"><div :style="{backgroundColor:getColor(transaction.category.color)}" class="rounded-md p-2 max-w-max sepia">{{transaction.category.name}}</div></td>
           <td class="p-4 pl-8 border-gray-100 border-b">{{showDate(transaction.date)}}</td>
           <td class="p-4 pl-8 border-gray-100 border-b text-right">{{transaction.amount.toLocaleString('us-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}} <span class="text-gray-400">{{transaction.currency}}</span></td>
           <td class="border-gray-100 border-b">
