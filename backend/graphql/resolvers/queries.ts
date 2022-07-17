@@ -10,7 +10,7 @@ export async function getAccountById(_parent: undefined, _args: { id: string }, 
 }
 
 export async function getAllAccounts(_parent: undefined, _args: undefined, context: Context) {
-  const accounts = await context.prisma.account.findMany({ include: { transactions: true } });
+  const accounts = await context.prisma.account.findMany(/* { include: { transactions: true } } */);
   return accounts;
 }
 
