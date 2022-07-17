@@ -50,12 +50,12 @@ export async function getTransactions(
   const take = _args.take || 20;
   const skip = _args.skip || 0;
 
-  const startMonth = _args.startMonth // expects "02-2022" format
-    ? new Date(Number(_args.startMonth.split('-')[1]), Number(_args.startMonth.split('-')[0]))
+  const startMonth = _args.startMonth // expects "2022-02" format
+    ? new Date(Number(_args.startMonth.split('-')[0]), Number(_args.startMonth.split('-')[1]))
     : new Date(new Date().getFullYear());
 
-  const endMonth = _args.endMonth // expects "02-2022" format
-    ? new Date(Number(_args.endMonth.split('-')[1]), Number(_args.endMonth.split('-')[0]))
+  const endMonth = _args.endMonth // expects "2022-02" format
+    ? new Date(Number(_args.endMonth.split('-')[0]), Number(_args.endMonth.split('-')[1]))
     : new Date(new Date().getFullYear(), new Date().getMonth());
 
   const searchParams: Prisma.TransactionFindManyArgs = {
