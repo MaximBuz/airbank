@@ -15,6 +15,7 @@
       <th class="border-collapse border border-slate-400">Category</th>
       <th class="border-collapse border border-slate-400">Date</th>
       <th class="border-collapse border border-slate-400">Amount</th>
+      <th class="border-collapse border border-slate-400">view</th>
     </tr>
   </thead>
   <tbody>
@@ -23,6 +24,7 @@
       <td class="border-collapse border border-slate-400">{{transaction.category.name}}</td>
       <td class="border-collapse border border-slate-400">{{transaction.date}}</td>
       <td class="border-collapse border border-slate-400">{{transaction.amount}}<span>{{transaction.currency}}</span></td>
+      <td><NuxtLink :to="`transactions/${transaction.id}`">View</NuxtLink></td>
     </tr>
   </tbody>
 </table>
