@@ -1,0 +1,6 @@
+query GetTransactions($withTransactions: Boolean) {
+  accounts: getAllAccounts(withTransactions: $withTransactions) {
+    name
+    id
+  }
+}

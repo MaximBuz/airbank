@@ -1,10 +1,9 @@
 <template>
   <div>
     <h1>Transactions</h1>
-    <select aria-placeholder="Filter by accounts">
+    <select v-model="accountId" aria-placeholder="Filter by accounts">
       <option>Filter by accounts</option>
-      <option></option>
-      <option></option>
+      <option v-for="account in accounts" :key="account.id">{{account.name}}</option>
     </select>
     <input type="month"></input>
     <input type="month"></input>
@@ -19,42 +18,51 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td class="border-collapse border border-slate-400">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-      <td class="border-collapse border border-slate-400">Malcolm Lockyer</td>
-      <td class="border-collapse border border-slate-400">1961</td>
-      <td class="border-collapse border border-slate-400">1961</td>
-    </tr>
-    <tr>
-      <td class="border-collapse border border-slate-400">Witchy Woman</td>
-      <td class="border-collapse border border-slate-400">The Eagles</td>
-      <td class="border-collapse border border-slate-400">1972</td>
-      <td class="border-collapse border border-slate-400">1972</td>
-    </tr>
-    <tr>
-      <td class="border-collapse border border-slate-400">Shining Star</td>
-      <td class="border-collapse border border-slate-400">Earth, Wind, and Fire</td>
-      <td class="border-collapse border border-slate-400">1975</td>
-      <td class="border-collapse border border-slate-400">1975</td>
+    <tr v-for="transaction in transactions" :key="transaction.id">
+      <td class="border-collapse border border-slate-400">{{transaction.reference}}</td>
+      <td class="border-collapse border border-slate-400">{{transaction.category.name}}</td>
+      <td class="border-collapse border border-slate-400">{{transaction.date}}</td>
+      <td class="border-collapse border border-slate-400">{{transaction.amount}}<span>{{transaction.currency}}</span></td>
     </tr>
   </tbody>
 </table>
-
-<li v-for="transaction in getTransactions" :key="transaction.id">
-        <p>{{transaction.reference}}</p>
-      </li>
   </div>
 </template>
 
 <script>
 import getTransactions from '~/graphql/getTransactions.gql'
+import getAllAccounts from '~/graphql/getAllAccounts.gql'
 export default {
   name: 'IndexPage',
-  apollo: {
-    getTransactions: {
-      prefetch: true,
-      query: getTransactions
+  data () {
+    return {
+      transactions: [],
+      sortAsc: false,
+      accountId: undefined,
+      startMonth: undefined,
+      endMonth: undefined,
+      skip: 0
     }
+  }, 
+  apollo: {
+    accounts: {
+      prefetch: true,
+      query: getAllAccounts
+    },
+    transactions: {
+      prefetch: true,
+      query: getTransactions,
+      variables() {
+        return {
+          sortAsc: this.sortAsc,
+          accountId: this.accountId,
+          startMonth: this.startMonth,
+          endMonth: this.endMonth,
+          take: 20,
+          skip: this.skip,
+        }
+      }
+    },
   },
   head: {
     title: 'Transactions'

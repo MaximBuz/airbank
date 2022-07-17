@@ -6,7 +6,7 @@ query GetTransactions(
   $take: Int
   $skip: Int
 ) {
-  getTransactions(
+  transactions: getTransactions(
     sortAsc: $sortAsc
     accountId: $accountId
     startMonth: $startMonth
