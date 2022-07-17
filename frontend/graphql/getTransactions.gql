@@ -1,0 +1,32 @@
+query GetTransactions(
+  $sortAsc: Boolean
+  $accountId: String
+  $startMonth: String
+  $endMonth: String
+  $take: Int
+  $skip: Int
+) {
+  getTransactions(
+    sortAsc: $sortAsc
+    accountId: $accountId
+    startMonth: $startMonth
+    endMonth: $endMonth
+    take: $take
+    skip: $skip
+  ) {
+    id
+    account {
+      name
+      id
+    }
+    category {
+      name
+      id
+      color
+    }
+    reference
+    amount
+    currency
+    date
+  }
+}
