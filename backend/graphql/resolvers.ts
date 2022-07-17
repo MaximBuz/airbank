@@ -6,11 +6,13 @@ import {
   getAllCategories,
   getTransactionById,
   getTransactions,
+  getAllAccounts
 } from './resolvers/queries';
 
 export const resolvers = {
   Query: {
     getAccountById,
+    getAllAccounts,
     getAllCategories,
     getTransactionById,
     getTransactions,

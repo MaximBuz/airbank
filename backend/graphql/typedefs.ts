@@ -26,6 +26,7 @@ export const typeDefs = gql`
   type Query {
     getAccountById(id: String!): Account
     getAllCategories: [Category]
+    getAllAccounts: [Account]
     getTransactionById(id: String!): Transaction
     getTransactions(
       sortAsc: Boolean
