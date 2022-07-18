@@ -1,6 +1,6 @@
 <template>
   <div
-    :style="{ backgroundColor: getColor(category.color) }"
+    :style="{ backgroundColor: color }"
     class="rounded-md p-2 flex justify-center items-center max-w-max max-h-max sepia"
   >
     {{ category.name }}
@@ -19,10 +19,10 @@ export default {
       }),
     },
   },
-  methods: {
-    getColor(color) {
-      if (!color) return '#f3f4f6'
-      return tinycolor('#' + color)
+  computed: {
+    color() {
+      if (!this.category.color) return '#f3f4f6'
+      return tinycolor('#' + this.category.color)
         .brighten(15)
         .toString()
     },

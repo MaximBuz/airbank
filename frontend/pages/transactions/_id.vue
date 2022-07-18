@@ -29,19 +29,14 @@
         <div class="flex flex-col items-center">
           <h3 class="text-xs text-gray-500">Amount</h3>
           <p :class="transaction.amount < 0 && 'text-red-400'" class="text-2xl">
-            {{
-              transaction.amount.toLocaleString('us-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })
-            }}
+            {{ amount }}
             {{ transaction.currency }}
           </p>
         </div>
         <div class="flex flex-col items-center">
           <h3 class="text-xs text-gray-500">Date</h3>
           <p class="text-2xl">
-            {{ showDate(transaction.date) }}
+            {{ date }}
           </p>
         </div>
       </div>
@@ -79,6 +74,20 @@ export default {
       transaction: null,
     }
   },
+  head: {
+    title: 'Transaction Details',
+  },
+  computed: {
+    date() {
+      return dayjs(Number(this.transaction.date)).format('DD. MMMM YYYY')
+    },
+    amount() {
+      return this.transaction.amount.toLocaleString('us-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    },
+  },
   apollo: {
     transaction: {
       prefetch: true,
@@ -88,14 +97,6 @@ export default {
           id: this.$route.params.id,
         }
       },
-    },
-  },
-  head: {
-    title: 'Transaction Details',
-  },
-  methods: {
-    showDate(timesamp) {
-      return dayjs(Number(timesamp)).format('DD. MMMM YYYY')
     },
   },
 }

@@ -13,8 +13,6 @@
             Date
             <svg
               viewBox="0 0 1024 1024"
-              focusable="false"
-              data-icon="caret-down"
               width="0.9em"
               height="0.9em"
               :fill="sortAsc ? '#60a5fa' : '#6b7280'"
@@ -62,7 +60,7 @@
           <span class="text-gray-400">{{ transaction.currency }}</span>
         </td>
 
-        <!-- Body to Transaction Detail Page -->
+        <!-- Link to Transaction Detail Page -->
         <td class="border-gray-100 border-b">
           <NuxtLink :to="`transactions/${transaction.id}`">
             <div class="w-full flex">
@@ -119,6 +117,7 @@ export default {
     transactions: { type: Array, default: () => [] },
     sortAsc: Boolean,
   },
+  emits: ['sort', 'reset'],
   methods: {
     showDate(timesamp) {
       return dayjs(Number(timesamp)).format('D/M/YYYY')

@@ -1,6 +1,6 @@
-import { Transaction } from './resolvers/transactions';
-import { Category } from './resolvers/categories';
-import { Account } from './resolvers/accounts';
+import { Transaction } from './resolvers/transaction';
+import { Category } from './resolvers/category';
+import { Account } from './resolvers/account';
 import {
   getAccountById,
   getAllCategories,
