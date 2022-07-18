@@ -2,8 +2,8 @@
 ## Fullstack Challange
 ![Screen Shot][screenshot]
 
-### Technologies used
-Frontend:
+## Technologies used
+<b>Frontend:</b>
 
 ☑️ JavaScript
 
@@ -16,10 +16,16 @@ Frontend:
 ☑️ TailwindCSS
 
 
-Backend:<br/>
+<b>Backend:</b>
+
+☑️ TypeScript
+
 ☑️ Prisma
+
 ☑️ PostgreSQL
+
 ☑️ GraphQL
+
 ☑️ Apollo Server
 
 
