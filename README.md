@@ -34,6 +34,14 @@
 npm install
 ```
 ```bash
+cd frontend/
+npm install
+```
+```bash
+cd backend/
+npm install
+```
+```bash
 npm run start:dev
 ```
 
