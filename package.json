@@ -1,0 +1,16 @@
+{
+  "name": "airbank-challange",
+  "version": "1.0.0",
+  "description": "Fullstack developer challange at Airbank",
+  "scripts": {
+    "start:dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\""
+  },
+  "dependencies": {
+    "concurrently": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaximBuz/airbank.git"
+  },
+  "author": "Maxim Buz"
+}
