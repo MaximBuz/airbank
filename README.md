@@ -3,12 +3,18 @@
 ![Screen Shot][screenshot]
 
 ### Technologies used
-Frontend:<br/>
+Frontend:
+
 ☑️ JavaScript
+
 ☑️ Vue
+
 ☑️ Nuxt
+
 ☑️ Apollo Client
+
 ☑️ TailwindCSS
+
 
 Backend:<br/>
 ☑️ Prisma
