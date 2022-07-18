@@ -49,6 +49,11 @@ cd backend/
 touch .env
 ```
 * add env-variable <code>DATABASE_URL="postgresql://DB_USER:DB_PASSWORD@HOST:PORT/airbank?schema=public"</code>
+```bash
+npx prisma generate
+npx prisma migrate dev
+npx prisma db seed (attention: this might take ~20s depending on your system)
+```
 
 <b>Run from root folder:</b>
 ```bash
