@@ -30,6 +30,8 @@
 
 
 ### Run locally
+
+<b>Install all dependencies:</b>
 ```bash
 npm install
 ```
@@ -41,6 +43,7 @@ npm install
 cd backend/
 npm install
 ```
+<b>Run from root folder:</b>
 ```bash
 npm run start:dev
 ```
