@@ -122,12 +122,6 @@ export default {
     showDate(timesamp) {
       return dayjs(Number(timesamp)).format('D/M/YYYY')
     },
-    getColor(color) {
-      if (!color) return '#f3f4f6'
-      return tinycolor('#' + color)
-        .brighten(15)
-        .toString()
-    },
     getAmount(number) {
       return number.toLocaleString('us-US', {
         minimumFractionDigits: 2,
